@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 
 // Closures
 
@@ -20,11 +20,17 @@ function counter() {
   otroContador()      // 3
    */
 
-  let aux = 1;
+  var aux = 1
   return function () {
-    return aux++;
-  };
+    return aux++
+  }
 }
+
+const nuevoContador = counter()
+
+console.log(nuevoContador()) // 1
+console.log(nuevoContador()) // 2
+console.log(nuevoContador()) // 3
 
 function cacheFunction(cb) {
   /*
@@ -61,17 +67,17 @@ function cacheFunction(cb) {
   //   };
   // }
 
-  let cache = {};
+  let cache = {}
 
   return function (arg) {
     if (cache.hasOwnProperty(arg)) {
-      return cache[arg];
+      return cache[arg]
     } else {
-      let result = cb(arg);
-      cache[arg] = result;
-      return cache[arg];
+      let result = cb(arg)
+      cache[arg] = result
+      return cache[arg]
     }
-  };
+  }
 }
 
 // Bind
@@ -79,15 +85,15 @@ function cacheFunction(cb) {
 var instructor = {
   nombre: 'Franco',
   edad: 25,
-};
+}
 
 var alumno = {
   nombre: 'Juan',
   curso: 'FullStack',
-};
+}
 
 function getNombre() {
-  return this.nombre;
+  return this.nombre
 }
 
 /*
@@ -98,8 +104,8 @@ function getNombre() {
   Usando el método bind() guardar, en las dos variables declaradas a continuación, dos funciones que actúen como getNombre pero retornen el nombre del instructor y del alumno, respectivamente.
 */
 
-let getNombreInstructor = getNombre.bind(instructor);
-let getNombreAlumno = getNombre.bind(alumno);
+let getNombreInstructor = getNombre.bind(instructor)
+let getNombreAlumno = getNombre.bind(alumno)
 
 /*
   Ejercicio 4
@@ -108,12 +114,12 @@ let getNombreAlumno = getNombre.bind(alumno);
 */
 
 function crearCadena(delimitadorIzquierda, delimitadorDerecha, cadena) {
-  return delimitadorIzquierda + cadena + delimitadorDerecha;
+  return delimitadorIzquierda + cadena + delimitadorDerecha
 }
 
-let textoAsteriscos = crearCadena.bind(null, '*', '*');
-let textoGuiones = crearCadena.bind(null, '-', '-');
-let textoUnderscore = crearCadena.bind(null, '_', '_');
+let textoAsteriscos = crearCadena.bind(null, '*', '*')
+let textoGuiones = crearCadena.bind(null, '-', '-')
+let textoUnderscore = crearCadena.bind(null, '_', '_')
 
 // No modifiquen nada debajo de esta linea
 // --------------------------------
@@ -126,4 +132,4 @@ module.exports = {
   textoAsteriscos,
   textoGuiones,
   textoUnderscore,
-};
+}
