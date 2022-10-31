@@ -49,35 +49,14 @@ function cacheFunction(cb) {
   const squareCache = cacheFunction(square)
 
   squareCache(5)    // invocará a square(5), almacenará el resultado y lo retornará
-  squareCache(5)    // no volverá a invocar a square, simplemente buscará en la caché cuál es el resultado de square(5) y lo retornará (tip: si usaste un objeto, podés usar hasOwnProperty) 
+  squareCache(5)    // no volverá a invocar a square, simplemente buscará en la caché cuál es el resultado de square(5) y lo retornará (tip: si usaste un objeto, podés usar hasOwnProperty)
 
   */
 
-  // if (aux.hasOwnProperty(auxArg)) {
-  //   return aux.auxArg;
-  // } else {
-  //   return function (arg) {
-  //     let cbResult = cb(arg);
-  //     let auxArg = arg;
-
-  //     let aux = {
-  //       auxArg: cbResult,
-  //     };
-  //     return aux;
-  //   };
-  // }
-
   let cache = {}
 
-  return function (arg) {
-    if (cache.hasOwnProperty(arg)) {
-      return cache[arg]
-    } else {
-      let result = cb(arg)
-      cache[arg] = result
-      return cache[arg]
-    }
-  }
+  return (arg) =>
+    cache.hasOwnProperty(arg) ? cache[arg] : (cache[arg] = cb(arg))
 }
 
 // Bind
@@ -107,10 +86,13 @@ function getNombre() {
 let getNombreInstructor = getNombre.bind(instructor)
 let getNombreAlumno = getNombre.bind(alumno)
 
+console.log(getNombreInstructor())
+console.log(getNombreAlumno())
+
 /*
   Ejercicio 4
-  
-  Sin modificar la función crearCadena, usar bind para guardar, en las tres variables declaradas a continuación, tres funciones que retornen una cadena (string) y el delimitador especificado (asteriscos, guiones, y guiones bajos, respectivamente). Las funciones obtenidas deberían recibir solamente un argumento - la cadena de texto - ya que los otros argumentos habrán sido "bindeados". 
+
+  Sin modificar la función crearCadena, usar bind para guardar, en las tres variables declaradas a continuación, tres funciones que retornen una cadena (string) y el delimitador especificado (asteriscos, guiones, y guiones bajos, respectivamente). Las funciones obtenidas deberían recibir solamente un argumento - la cadena de texto - ya que los otros argumentos habrán sido "bindeados".
 */
 
 function crearCadena(delimitadorIzquierda, delimitadorDerecha, cadena) {
