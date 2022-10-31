@@ -1,0 +1,11 @@
+Homework DOM
+
+Conceptos:
+    1. DOM: El document object model es la estructura que tienen todas las páginas web que le indica
+            donde se ubica cada uno de sus componentes, algo así como el esqueleto en una persona.
+
+    2. DOM element selectors: Nos permite nombrar, seleccionar y modificar a través del DOM API los
+            elementos del DOM, como por ejemplo un título, imagen, video, formularios, entre otros.
+
+    3. DOM events: Son eventos o acciones que realiza el usuario sobre el DOM, que pueden ser escuchados
+            con JavaScript para realizar respuestas establecidas.

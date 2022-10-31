@@ -1,0 +1,30 @@
+.buscarCiudad {
+  width: 18rem;
+  height: 40px;
+
+  padding: 1rem;
+  margin-right: 5px;
+
+  border: 1px solid #e5e5e5;
+  border-radius: 5px;
+}
+
+.botonAgregarCiudad {
+  width: auto;
+  height: 40px;
+
+  padding: 0 8px;
+  margin: -80px;
+
+  color: white;
+  background-color: rgb(66, 152, 96);
+
+  border: none;
+  border-radius: 5px;
+
+  transition: 0.3s;
+}
+
+.botonAgregarCiudad:hover {
+  background-color: rgb(56, 123, 79);
+}

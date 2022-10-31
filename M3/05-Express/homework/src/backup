@@ -1,0 +1,149 @@
+// EXPRESS
+const express = require('express')
+const server = express()
+const STATUS_USER_ERROR = 422
+
+server.use(express.json())
+
+// POSTS
+
+const posts = []
+let nextId = 0
+
+// HTTP
+
+server.post('/posts', (req, res) => {
+  const { author, title, contents } = req.body
+
+  if (!author || !title || !contents) {
+    return res.status(STATUS_USER_ERROR).json({
+      error: 'No se recibieron los parámetros necesarios para crear el Post',
+    })
+  }
+
+  const newPost = {
+    id: nextId,
+    author,
+    title,
+    contents,
+  }
+
+  posts.push(newPost)
+  nextId++
+  res.json(newPost)
+})
+
+server.post('/posts/author/:author', (req, res) => {
+  const { title, contents } = req.body
+  const { author } = req.params
+
+  if (!author || !title || !contents) {
+    return res.status(STATUS_USER_ERROR).json({
+      error: 'No se recibieron los parámetros necesarios para crear el Post',
+    })
+  }
+
+  const newPost = {
+    id: ++nextId,
+    author,
+    title,
+    contents,
+  }
+
+  posts.push(newPost)
+  res.json(newPost)
+})
+
+server.get('/posts', (req, res) => {
+  const { term } = req.query
+
+  if (term) {
+    const filteredTerm = posts.filter(
+      (p) => p.title.includes(term) || p.contents.includes(term)
+    )
+    return res.json(filteredTerm)
+  }
+
+  res.json(posts)
+})
+
+server.get('/posts/:author', (req, res) => {
+  let { author } = req.params
+  const author_post = posts.filter((e) => e.author === author)
+
+  if (author_post.length > 0) {
+    res.json(author_post)
+  } else {
+    res.status(STATUS_USER_ERROR).json({
+      error: 'No existe ningun post del autor indicado',
+    })
+  }
+})
+
+server.get('/posts/:author/:title', (req, res) => {
+  let { author, title } = req.params
+  const post = posts.filter((e) => e.title === title && e.author === author)
+
+  if (post.length > 0) {
+    res.json(post)
+  } else {
+    res.status(STATUS_USER_ERROR).json({
+      error: 'No existe ningun post con dicho titulo y autor indicado',
+    })
+  }
+})
+
+server.put('/posts', (req, res) => {
+  let { id, title, contents } = req.body
+  if (id && title && contents) {
+    let post = posts.find((e) => e.id === id)
+
+    if (post) {
+      post.title = title
+      post.contents = contents
+      res.json(post)
+    } else {
+      res.status(STATUS_USER_ERROR).json({
+        error: 'No existe un post con este id',
+      })
+    }
+  } else {
+    res.status(STATUS_USER_ERROR).json({
+      error:
+        'No se recibieron los parámetros necesarios para modificar el Post',
+    })
+  }
+})
+
+server.delete('/posts', (req, res) => {
+  let { id } = req.body
+  const post = posts.find((e) => e.id === id)
+
+  if (!post || !id) {
+    res.status(STATUS_USER_ERROR).json({ error: 'Mensaje de error' })
+  }
+
+  posts = posts.filter((e) => e.id !== id)
+  res.json({ success: true })
+})
+
+server.delete('/author', (req, res) => {
+  let { author } = req.body
+
+  if (!author) {
+    return res.status(STATUS_USER_ERROR).json({ error: 'Author not found' })
+  }
+
+  const postAuthor = posts.filter((e) => e.author === author)
+
+  if (postAuthor.length === 0) {
+    return res
+      .status(STATUS_USER_ERROR)
+      .json({ error: 'No existe el autor indicado' })
+  } else {
+    posts = posts.filter((e) => e.author !== author)
+    res.json(postAuthor)
+  }
+})
+
+module.exports = { posts, server }

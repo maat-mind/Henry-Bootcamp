@@ -1,0 +1,10 @@
+{
+  "layout": "lesson",
+  "lessonTitle": "SQL",
+  "permalink": "/SQL/",
+  "homeworkUrl": "https://github.com/soyHenry/FT-M4/tree/master/02-sql/homework/WorkShopSQL.md",
+  "eleventyNavigation": {
+    "key": "SQL",
+    "order": 2
+  }
+}
